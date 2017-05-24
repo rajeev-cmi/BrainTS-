@@ -8,13 +8,13 @@ from keras import layers
 from keras.layers import Dense
 from keras.layers import Activation
 from keras.layers import Flatten
-from keras.layers import Conv2D
-from keras.layers import UpSampling2D
-from keras.layers import MaxPooling2D
-from keras.layers import GlobalMaxPooling2D
-from keras.layers import ZeroPadding2D
-from keras.layers import AveragePooling2D
-from keras.layers import GlobalAveragePooling2D
+#from keras.layers import Conv2D
+#from keras.layers import UpSampling2D
+#from keras.layers import MaxPooling2D
+#from keras.layers import GlobalMaxPooling2D
+#from keras.layers import ZeroPadding2D
+#from keras.layers import AveragePooling2D
+#from keras.layers import GlobalAveragePooling2D
 
 from keras.layers import Conv3D
 from keras.layers import UpSampling3D
@@ -144,7 +144,7 @@ def up_conv_block(input_tensor, kernel_size, filters, stage, block, strides=(1, 
 
 
 
-def voxResnetModel(input_tensor=None, input_shape=None, classes=1):
+def voxModel(input_tensor=None, input_shape=None, classes=1):
 
     if K.image_data_format() == 'channels_last':
         bn_axis = 4
@@ -211,7 +211,7 @@ def voxResnetModel(input_tensor=None, input_shape=None, classes=1):
     x = UpSampling3D(size=(2, 2, 2))(x)
     x = Conv3D(classes, (3, 3, 3), padding='same', activation = 'softmax', name='convLast')(x)
 
-    model = Model(img_input, x, name='resnetUnet')
+    model = Model(img_input, x, name='voxResnetUnet')
 
     model.compile(optimizer=Adam(lr=1e-5), loss=dice_coef_loss, metrics=[dice_coef])
     return model
@@ -219,5 +219,5 @@ def voxResnetModel(input_tensor=None, input_shape=None, classes=1):
 
 """
 if __name__ == '__main__':
-    model = voxResnetModel()
+    model = voxModel()
 """
